@@ -1,0 +1,8 @@
+\begin{tikzpicture}[scale=0.9]
+  \draw[->, thick] (0, 0) -- (4.2, 0) node[right] {$x$};
+  \draw[->, thick] (0, 0) -- (0, 2.7) node[above] {$y$};
+  \draw[blue, very thick, domain=0.2:3.8, samples=60]
+    plot (\x, {1.1 + 0.65*sin(75*\x)});
+  \filldraw[red] (2.4, {1.1 + 0.65*sin(75*2.4)}) circle (2pt)
+    node[above right] {sample};
+\end{tikzpicture}

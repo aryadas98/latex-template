@@ -1,0 +1,46 @@
+{
+    "editor.wordWrap": "on",
+    "latex-workshop.latex.outDir": "%DIR%/out",
+    "latex-workshop.latex.recipe.default": "latexmk (script)",
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk (script)",
+            "command": "bash",
+            "args": [
+                "%WORKSPACE_FOLDER%/scripts/build_latex.sh",
+                "%DOC%"
+            ]
+        },
+        {
+            "name": "clean build",
+            "command": "bash",
+            "args": [
+                "%WORKSPACE_FOLDER%/scripts/clean_latex.sh",
+                "%DOC%"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk (script)",
+            "tools": [
+                "latexmk (script)"
+            ]
+        },
+        {
+            "name": "clean build",
+            "tools": [
+                "clean build"
+            ]
+        }
+    ],
+    "latex-workshop.message.badbox.show": "none",
+    "latex-workshop.view.outline.floats.enabled": false,
+    "latex-workshop.view.outline.commands": [],
+    "cSpell.enabled": true,
+    "explorer.autoRevealExclude": {
+        "*/out/*": true
+    },
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "James-Yu.latex-workshop",
+}

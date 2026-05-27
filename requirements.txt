@@ -1,0 +1,8 @@
+# General data loading, numerical analysis, and publication plotting.
+numpy>=2.0,<3
+pandas>=2.2,<4
+matplotlib>=3.8,<4
+scipy>=1.13,<2
+seaborn>=0.13,<1
+openpyxl>=3.1,<4
+SciencePlots>=2.1,<3

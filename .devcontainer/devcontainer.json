@@ -1,0 +1,35 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-dockerfile
+{
+	"name": "LaTeX Template",
+	"image": "mylatex-template:dev",
+	"mounts": [
+		"source=${localEnv:HOME}/.codex/auth.json,target=/etc/codex/auth.json,readonly,type=bind"
+	],
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"James-Yu.latex-workshop",
+				"openai.chatgpt",
+				"tomoki1207.pdf",
+				"streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries"
+			],
+			"settings": {
+				"editor.formatOnSave": true,
+				"latex-workshop.formatting.latex": "latexindent",
+				"latex-workshop.latex.autoBuild.run": "onSave",
+				"latex-workshop.linting.chktex.enabled": true
+			}
+		}
+	},
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	// Uncomment the next line to run commands after the container is created.
+	// install the package locally for development
+	"postCreateCommand": "mkdir -p ~/.codex && cp /etc/codex/auth.json ~/.codex/auth.json && python3 scripts/fix_codex_permissions.py"
+	// Configure tool-specific properties.
+	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "devcontainer"
+}

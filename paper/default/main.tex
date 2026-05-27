@@ -1,0 +1,38 @@
+\documentclass{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{tikz}
+\usepackage{hyperref}
+
+\title{Example Manuscript}
+\author{Author Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document demonstrates the default manuscript folder, a shared figure, and
+a bibliography shared by future journal-specific manuscript variants.
+\end{abstract}
+
+\section{Introduction}
+
+This template keeps common publication assets outside journal-specific folders.
+For example, this document cites Lamport's description of \LaTeX{}
+\cite{lamport1986latex} and imports Figure~\ref{fig:example} from the shared
+figures directory.
+
+\begin{figure}[htbp]
+  \centering
+  \input{../figures/example_figure.tex}
+  \caption{A shared example figure available to manuscript variants.}
+  \label{fig:example}
+\end{figure}
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
