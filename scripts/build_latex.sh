@@ -9,6 +9,10 @@ fi
 tex_path="$1"
 tex_path="$(readlink -f "$tex_path")"
 
+if [[ ! -f "$tex_path" && -f "${tex_path}.tex" ]]; then
+  tex_path="${tex_path}.tex"
+fi
+
 if [[ ! -f "$tex_path" ]]; then
   echo "Document not found: $tex_path" >&2
   exit 1
@@ -32,9 +36,25 @@ out_dir="$tex_dir/out"
 
 mkdir -p "$out_dir"
 
+if compgen -G "$paper_dir/figures/*.eps" >/dev/null; then
+  if ! command -v epstopdf >/dev/null 2>&1; then
+    echo "epstopdf is required to convert EPS figures but was not found." >&2
+    exit 1
+  fi
+
+  for eps_file in "$paper_dir"/figures/*.eps; do
+    eps_name="$(basename "$eps_file" .eps)"
+    pdf_file="$out_dir/${eps_name}-eps-converted-to.pdf"
+
+    if [[ ! -f "$pdf_file" || "$eps_file" -nt "$pdf_file" ]]; then
+      epstopdf "$eps_file" --outfile="$pdf_file"
+    fi
+  done
+fi
+
 export BIBINPUTS="$paper_dir/bibliography:$tex_dir:$project_root:$out_dir:"
 export BSTINPUTS="$tex_dir:$project_root:$out_dir:"
-export TEXINPUTS="$paper_dir/figures:$paper_dir:$tex_dir:"
+export TEXINPUTS="$out_dir:$paper_dir/figures:$paper_dir:$tex_dir:"
 
 cd "$tex_dir"
 
