@@ -8,11 +8,3 @@ COPY requirements.txt /tmp/requirements.txt
 
 RUN python3 -m pip install --no-cache-dir --break-system-packages -r /tmp/requirements.txt \
     && rm -f /tmp/requirements.txt
-
-# Codex & dependencies
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        bubblewrap nodejs npm python3-tomli-w \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN npm i -g @openai/codex

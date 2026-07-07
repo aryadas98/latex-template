@@ -3,14 +3,17 @@
 {
 	"name": "LaTeX Template",
 	"image": "mylatex-template:dev",
-	"mounts": [
-		"source=${localEnv:HOME}/.codex/auth.json,target=/etc/codex/auth.json,readonly,type=bind"
-	],
+	// The base image runs as root, so ~ resolves to /root below.
+	// The native Claude Code installer places its binary in ~/.local/bin, which
+	// nothing else adds to PATH.
+	"remoteEnv": {
+		"PATH": "${containerEnv:PATH}:/root/.local/bin"
+	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"James-Yu.latex-workshop",
-				"openai.chatgpt",
+				"anthropic.claude-code",
 				"tomoki1207.pdf",
 				"streetsidesoftware.code-spell-checker-cspell-bundled-dictionaries"
 			],
@@ -23,12 +26,15 @@
 		}
 	},
 	// Features to add to the dev container. More info: https://containers.dev/features.
+	// NOTE: do not add the Claude Code devcontainer feature; it installs via npm
+	// and hits an "npm global folder isn't writable" auto-update bug. The native
+	// curl installer in .devcontainer/postCreate.sh is used instead.
 	// "features": {},
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
-	// Uncomment the next line to run commands after the container is created.
-	// install the package locally for development
-	"postCreateCommand": "mkdir -p ~/.codex && cp /etc/codex/auth.json ~/.codex/auth.json && python3 scripts/fix_codex_permissions.py"
+	// Runs as root after the container is created: link Claude Code's config into
+	// the repo and install/update Claude Code.
+	"postCreateCommand": "bash .devcontainer/postCreate.sh"
 	// Configure tool-specific properties.
 	// Uncomment to connect as an existing user other than the container default. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "devcontainer"

@@ -3,6 +3,9 @@ out/
 *Zone.Identifier
 .env
 
+# Claude Code's personal auth/settings/history, symlinked to ~/.claude in the container.
+.claude_data/
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

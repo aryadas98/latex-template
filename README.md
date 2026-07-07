@@ -131,14 +131,16 @@ The `.env` file is ignored by Git and must not be committed.
 
 The Docker image is built from `Dockerfile` by
 `scripts/build_docker_image.sh`. The devcontainer uses that locally named image
-and includes LaTeX tooling, Codex dependencies, and the common data-analysis
-packages listed in `requirements.txt` (NumPy, pandas, Matplotlib, SciPy,
-seaborn, openpyxl, and SciencePlots). Re-run the image build script after
-changing those dependencies.
+and includes LaTeX tooling and the common data-analysis packages listed in
+`requirements.txt` (NumPy, pandas, Matplotlib, SciPy, seaborn, openpyxl, and
+SciencePlots). Re-run the image build script after changing those dependencies.
 
 The devcontainer `name` value is only a VS Code display label; multiple paper
 projects can use the same value without a Docker container-name conflict.
 
-The configuration mounts the host Codex authentication file at
-`${HOME}/.codex/auth.json`; adjust that mount on machines that do not use this
-location.
+Claude Code is installed at container-creation time by
+`.devcontainer/postCreate.sh` using the native installer (not the npm-based
+devcontainer feature). That script also symlinks `~/.claude` to a `.claude_data/`
+folder in the repository root so Claude Code's auth, settings, and history
+persist across container rebuilds. Create an empty `.claude_data/` folder at the
+repo root before the first build; it is Git-ignored and never committed.
